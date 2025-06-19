@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../styles/Sidebar.css";
 
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartBar,
@@ -13,7 +12,6 @@ import {
   faUser,
   faQuestionCircle
 } from "@fortawesome/free-solid-svg-icons";
-
 
 import logo from "../assets/images/logo1.jpeg";
 
@@ -27,25 +25,25 @@ const Sidebar = () => {
 
       <ul className="menu-section">
         <li>
-          <NavLink to="/">
+          <NavLink to="/admin-dashboard" activeclassname="active">
             <FontAwesomeIcon icon={faChartBar} />
             <span>Dashboard</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/manage-ipo">
+          <NavLink to="/manage-ipo" activeclassname="active">
             <FontAwesomeIcon icon={faList} />
             <span>Manage IPO</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/ipo-subscription">
+          <NavLink to="/ipo-subscription" activeclassname="active">
             <FontAwesomeIcon icon={faClipboard} />
             <span>IPO Subscription</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/ipo-allotment">
+          <NavLink to="/ipo-allotment" activeclassname="active">
             <FontAwesomeIcon icon={faDownload} />
             <span>IPO Allotment</span>
           </NavLink>
@@ -56,25 +54,25 @@ const Sidebar = () => {
 
       <ul className="menu-section">
         <li>
-          <NavLink to="/settings">
+          <NavLink to="/settings" activeclassname="active">
             <FontAwesomeIcon icon={faCog} />
             <span>Settings</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/api-manager">
+          <NavLink to="/api-manager" activeclassname="active">
             <FontAwesomeIcon icon={faPlug} />
             <span>API Manager</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/accounts">
+          <NavLink to="/accounts" activeclassname="active">
             <FontAwesomeIcon icon={faUser} />
             <span>Accounts</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/help">
+          <NavLink to="/help" activeclassname="active">
             <FontAwesomeIcon icon={faQuestionCircle} />
             <span>Help</span>
           </NavLink>
