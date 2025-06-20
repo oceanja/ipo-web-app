@@ -1,50 +1,47 @@
-import React from 'react';
+import React from "react";
 
-const IPOCard = ({ name, priceLow, priceHigh, open, close, size, type, listing }) => {
+const IPOCard = ({
+  name,
+  priceBand,
+  open,
+  close,
+  size,
+  type,
+  listing,
+}) => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 border">
-      {/* Company Name */}
-      <h2 className="text-xl font-semibold text-blue-700 mb-6">{name}</h2>
-
-      {/* First Row: Price Band, Open, Close */}
-      <div className="flex justify-between mb-6 gap-x-8">
-        {/* Each item is a vertical flex */}
-        <div className="flex flex-col items-center text-gray-800">
-          <span className="mb-1">Price Band</span>
-          <span className="text-gray-900 font-semibold">₹{priceLow} – ₹{priceHigh}</span>
-        </div>
-        <div className="flex flex-col items-center text-gray-800">
-          <span className="mb-1">Open</span>
-          <span className="text-gray-900 font-semibold">{open}</span>
-        </div>
-        <div className="flex flex-col items-center text-gray-800">
-          <span className="mb-1">Close</span>
-          <span className="text-gray-900 font-semibold">{close}</span>
-        </div>
+    <div className="bg-white shadow-md rounded-lg p-4 border w-full max-w-sm mx-auto">
+      <div className="flex items-center mb-3">
+        {/* Placeholder circle for logo */}
+        <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+        <h2 className="text-lg font-semibold text-indigo-600">{name}</h2>
       </div>
 
-      {/* Second Row: Issue Size, Issue Type, Listing Date */}
-      <div className="flex justify-between gap-x-8 text-gray-800">
-        <div className="flex flex-col items-center">
-          <span className="mb-1">Issue Size</span>
-          <span className="text-gray-900 font-semibold">₹{size} Cr</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="mb-1">Issue Type</span>
-          <span className="text-gray-900 font-semibold">{type}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="mb-1">Listing Date</span>
-          <span className="text-gray-900 font-semibold">{listing}</span>
-        </div>
+      <div className="grid grid-cols-2 gap-y-2 text-sm text-gray-700 mb-4">
+        <p className="font-medium">Price Band</p>
+        <p>{priceBand}</p>
+
+        <p className="font-medium">Open</p>
+        <p>{open}</p>
+
+        <p className="font-medium">Close</p>
+        <p>{close}</p>
+
+        <p className="font-medium">Issue Size</p>
+        <p>{size}</p>
+
+        <p className="font-medium">Issue Type</p>
+        <p>{type}</p>
+
+        <p className="font-medium">Listing Date</p>
+        <p>{listing}</p>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex gap-4 mt-6">
-        <button className="px-4 py-1 bg-blue-100 text-blue-700 rounded border border-blue-500 font-semibold">
+      <div className="flex gap-3 mt-2">
+        <button className="px-4 py-1 border border-blue-600 text-blue-600 rounded font-medium text-sm">
           RHP
         </button>
-        <button className="px-4 py-1 bg-red-500 text-white rounded font-semibold">
+        <button className="px-4 py-1 bg-red-500 text-white rounded font-medium text-sm">
           DRHP
         </button>
       </div>

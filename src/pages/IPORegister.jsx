@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar";
+
 
 const RegisterIPO = () => {
   return (
     <div>
-      <Navbar />
+     
       <div className="p-4">
         <h4 className="mb-4">Upcoming IPO Information</h4>
 

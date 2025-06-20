@@ -89,7 +89,7 @@ const ManageIPO = () => {
 
   return (
     <div>
-      <Navbar />
+     
       <div className="p-4">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h4>Upcoming IPO | Dashboard</h4>
