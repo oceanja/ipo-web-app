@@ -1,11 +1,22 @@
-import Navbar from "../components/Navbar";
+ import Navbar from "../components/Navbar";
 
 const RegisterIPO = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="p-4">
-        <h4 className="mb-4">Upcoming IPO Information</h4>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+  <h4 style={{ margin: 0 }}>Upcoming IPO Information</h4>
+  <div>
+    <button style={{ marginRight: '10px', padding: '6px 12px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', fontSize:'20px' }}>
+      Register
+    </button>
+    <button style={{ padding: '6px 12px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '20px' }}>
+      Cancel
+    </button>
+  </div>
+</div>
+
 
         <div className="row">
           <div className="col-md-8">
@@ -107,7 +118,6 @@ const RegisterIPO = () => {
                 <input type="text" className="form-control" placeholder="Enter DRHP PDF link" />
               </div>
 
-              <button type="submit" className="btn btn-primary">Submit</button>
             </form>
           </div>
 

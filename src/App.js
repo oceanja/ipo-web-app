@@ -8,7 +8,7 @@ import SharkPage from './pages/SharkPage';
 const ipoData = [
   { name: "Company 1", priceLow: 100, priceHigh: 120, open: 110, close: 115, size: 500, type: "Book Building", listing: "2025-07-01" },
   { name: "Company 2", priceLow: 200, priceHigh: 250, open: 220, close: 240, size: 800, type: "Fixed Price", listing: "2025-08-15" },
-  // ✅ make sure every object has a unique name
+  //  make sure every object has a unique name
 ];
 
 // 👇 Home page for IPO cards
@@ -17,7 +17,7 @@ function HomePage() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
       {ipoData.map((ipo) => (
         <IPOCard
-          key={ipo.name} // ✅ Better than using index (if name is unique)
+          key={ipo.name} // Better than using index (if name is unique)
           name={ipo.name}
           priceLow={ipo.priceLow}
           priceHigh={ipo.priceHigh}
