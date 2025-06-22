@@ -1,6 +1,6 @@
 import React from "react";
 import IPOCard from "../components/IPOCard";
-import PublicNavbar from "../components/PublicNavbar"; // 👈 you're importing it
+import PublicNavbar from "../components/PublicNavbar"; //  you're importing it
 
 const ipoList = [
   {

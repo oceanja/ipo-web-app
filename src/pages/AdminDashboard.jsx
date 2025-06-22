@@ -136,7 +136,7 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* 🔵 Recharts Donut Chart */}
+        {/* Recharts Donut Chart */}
         <div style={{ width: "100%", height: 200 }}>
           <ResponsiveContainer>
             <PieChart>
