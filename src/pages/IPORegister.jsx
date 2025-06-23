@@ -130,6 +130,7 @@ const RegisterIPO = () => {
   };
   return (
     <div>
+
       <div className="p-4">
         {successMessage && (
           <div className="alert alert-success" role="alert">

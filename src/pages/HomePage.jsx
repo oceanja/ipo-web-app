@@ -116,7 +116,7 @@ const ipoList = [
 const HomePage = () => {
   return (
     <>
-      <PublicNavbar /> {/* ✅ You forgot to include this line */}
+      <PublicNavbar /> {/* ✅You forgot to include this line */}
       <div className="min-h-screen bg-[#f5f5f5] py-10 px-4">
         <h2 className="text-2xl font-semibold mb-6 text-center text-[#333]">
           Upcoming IPO
