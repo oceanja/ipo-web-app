@@ -8,17 +8,17 @@ import AdminDashboard from "./pages/AdminDashboard";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ViewIPO from "./pages/ViewIPO";
+import UpdateIPO from "./pages/UpdateIPO";
 
 function AppWrapper() {
   const location = useLocation();
-
   const hideLayout = ["/", "/login", "/signup"].includes(location.pathname);
 
   return (
     <>
       {!hideLayout && <Sidebar />}
 
-      {/* Scrollable Page Container */}
       <div
         style={{
           marginLeft: hideLayout ? 0 : "220px",
@@ -30,14 +30,12 @@ function AppWrapper() {
       >
         {!hideLayout && <Navbar />}
 
-        {/* Routes that scroll naturally */}
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
 
-            {/* Protected Admin Routes */}
             <Route
               path="/admin-dashboard"
               element={
@@ -62,8 +60,23 @@ function AppWrapper() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/view-ipo/:id"
+              element={
+                <ProtectedRoute>
+                  <ViewIPO />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/update-ipo/:id"
+              element={
+                <ProtectedRoute>
+                  <UpdateIPO />
+                </ProtectedRoute>
+              }
+            />
 
-            {/* 404 */}
             <Route path="*" element={<h2>404 - Page Not Found</h2>} />
           </Routes>
         </div>

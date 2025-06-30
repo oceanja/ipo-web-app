@@ -1,39 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import { FaTrashAlt, FaEye } from "react-icons/fa";
-
-const ipoData = [
-  {
-    company: "Adani Power",
-    priceBand: "₹ 329 - 136",
-    open: "2023-06-03",
-    close: "2024-06-05",
-    issueSize: "4553.10 Cr.",
-    issueType: "Book Built",
-    listingDate: "2023-06-10",
-    status: "Ongoing",
-  },
-  {
-    company: "VBL LTD",
-    priceBand: "₹ 229 - 136",
-    open: "2024-06-03",
-    close: "2024-06-05",
-    issueSize: "1330.15 Cr.",
-    issueType: "Book Built",
-    listingDate: "2018-06-10",
-    status: "Coming",
-  },
-  {
-    company: "Tata Motor",
-    priceBand: "₹ 12549 - 136",
-    open: "2024-06-03",
-    close: "2024-06-05",
-    issueSize: "1340.15 Cr.",
-    issueType: "Book Built",
-    listingDate: "2016-06-10",
-    status: "New Listed",
-  },
-];
 
 const getStatusBadge = (status) => {
   const baseStyle = {
@@ -86,93 +54,139 @@ const buttonStyle = {
 
 const ManageIPO = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // 👈 to track route change
+  const [ipoData, setIpoData] = useState([]);
+
+  useEffect(() => {
+    const fetchIPOs = async () => {
+      try {
+        const res = await axios.get("http://localhost:5050/api/ipo");
+        setIpoData(res.data);
+      } catch (error) {
+        console.error("Error fetching IPOs:", error);
+      }
+    };
+
+    fetchIPOs();
+  }, [location.key]); // 👈 refresh on every route change
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5050/api/ipo/${id}`);
+      setIpoData((prev) => prev.filter((ipo) => ipo.ipo_id !== id));
+    } catch (error) {
+      console.error("Error deleting IPO:", error);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+    return new Date(dateString).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
   return (
-    <div>
-     
-      <div className="p-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4>Upcoming IPO | Dashboard</h4>
-          <button
-            onClick={() => navigate("/register-ipo")}
-            style={{
-              backgroundColor: "#6c63ff",
-              color: "#fff",
-              border: "none",
-              padding: "8px 16px",
-              borderRadius: "8px",
-              fontSize: "14px",
-            }}
-          >
-            Register IPO
-          </button>
-        </div>
+    <div className="p-4">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4>Upcoming IPO | Dashboard</h4>
+        <button
+          onClick={() => navigate("/register-ipo")}
+          style={{
+            backgroundColor: "#6c63ff",
+            color: "#fff",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
+        >
+          Register IPO
+        </button>
+      </div>
 
-        <div className="table-responsive">
-          <table
-            className="align-middle text-center"
-            style={{
-              borderCollapse: "collapse",
-              width: "100%",
-              border: "1px solid #e0e0e0",
-            }}
-          >
-            <thead style={{ backgroundColor: "#f9f9fb", fontSize: "14px" }}>
-              <tr>
-                {[
-                  "Company",
-                  "Price Band",
-                  "Open",
-                  "Close",
-                  "Issue Size",
-                  "Issue Type",
-                  "Listing Date",
-                  "Status",
-                  "Action",
-                  "Delete / View",
-                ].map((heading, idx) => (
-                  <th
-                    key={idx}
-                    style={{
-                      border: "1px solid #e0e0e0",
-                      padding: "10px",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {heading}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {ipoData.map((ipo, index) => (
-                <tr
-                  key={index}
+      <div className="table-responsive">
+        <table
+          className="align-middle text-center"
+          style={{
+            borderCollapse: "collapse",
+            width: "100%",
+            border: "1px solid #e0e0e0",
+          }}
+        >
+          <thead style={{ backgroundColor: "#f9f9fb", fontSize: "14px" }}>
+            <tr>
+              {[
+                "Company",
+                "Price Band",
+                "Open",
+                "Close",
+                "Issue Size",
+                "Issue Type",
+                "Listing Date",
+                "Status",
+                "Action",
+                "Delete / View",
+              ].map((heading, idx) => (
+                <th
+                  key={idx}
                   style={{
-                    backgroundColor: index % 2 === 0 ? "#f6f5ff" : "#fff",
-                    borderBottom: "1px solid #e0e0e0",
+                    border: "1px solid #e0e0e0",
+                    padding: "10px",
+                    fontWeight: 500,
                   }}
                 >
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.company}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.priceBand}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.open}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.close}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.issueSize}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.issueType}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.listingDate}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{getStatusBadge(ipo.status)}</td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>
-                    <button style={buttonStyle.update}>Update</button>
-                  </td>
-                  <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>
-                    <button style={buttonStyle.delete}><FaTrashAlt /></button>
-                    <button style={buttonStyle.view}><FaEye /></button>
-                  </td>
-                </tr>
+                  {heading}
+                </th>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody>
+            {ipoData.map((ipo, index) => (
+              <tr
+                key={index}
+                style={{
+                  backgroundColor: index % 2 === 0 ? "#f6f5ff" : "#fff",
+                  borderBottom: "1px solid #e0e0e0",
+                }}
+              >
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.company_name}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.price_band}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{formatDate(ipo.open_date)}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{formatDate(ipo.close_date)}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.issue_size} Cr.</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.issue_type}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{formatDate(ipo.listing_date)}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{getStatusBadge(ipo.status)}</td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                  <button
+                    style={buttonStyle.update}
+                    onClick={() => navigate(`/update-ipo/${ipo.ipo_id}`)}
+                  >
+                    Update
+                  </button>
+                </td>
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                  <button style={buttonStyle.delete} onClick={() => handleDelete(ipo.ipo_id)}>
+                    <FaTrashAlt />
+                  </button>
+                  <button style={buttonStyle.view} onClick={() => navigate(`/ipo/${ipo.ipo_id}`)}>
+                    <FaEye />
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {ipoData.length === 0 && (
+              <tr>
+                <td colSpan="10" style={{ padding: "20px", color: "#999" }}>
+                  No IPOs found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
