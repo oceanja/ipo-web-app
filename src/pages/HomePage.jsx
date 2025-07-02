@@ -1,7 +1,18 @@
 import React from "react";
 import IPOCard from "../components/IPOCard";
 import PublicNavbar from "../components/PublicNavbar"; //  you're importing it
-
+import NovaImage from "../assets/NOVAImage.png";
+import EPACKlogo from "../assets/EPACKImage.jpeg";
+import RKSwamy from "../assets/RKImage.jpeg";
+import oyo from "../assets/OYOlogo.png";  
+import boat from "../assets/BoatImage.png"; 
+import  KidsClinic from "../assets/ClinicIndia.png";
+import  OlaElectric from "../assets/OLAlogo.png";
+import  MobiKwik from "../assets/MobiKwik.png";
+import ixigo from "../assets/ixigo.jpg";
+import cmr from "../assets/CMRlogo.jpg";
+import wellness from "../assets/welnessLogo.png";
+import pkhVentures from "../assets/PKHVneturesLogo.png";
 const ipoList = [
   {
     name: "Nova Agritech Ltd.",
@@ -11,6 +22,7 @@ const ipoList = [
     size: "143.81 Cr.",
     type: "Book Built",
     listing: "2024-01-30",
+    logo: NovaImage
   },
   {
     name: "EPACK Durable Ltd.",
@@ -20,6 +32,7 @@ const ipoList = [
     size: "640.05 Cr.",
     type: "Book Built",
     listing: "2024-01-29",
+    logo: EPACKlogo
   },
   {
     name: "RK Swamy Ltd.",
@@ -29,6 +42,7 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo: RKSwamy,
   },
   {
     name: "Oravel Stays Ltd.",
@@ -38,6 +52,7 @@ const ipoList = [
     size: "8430 Cr.",
     type: "Book Built",
     listing: "Not Issued",
+    logo: oyo
   },
   {
     name: "Imagine marketing ltd.",
@@ -47,6 +62,7 @@ const ipoList = [
     size: "2000 Cr.",
     type: "Book Built",
     listing: "Not Issued",
+    logo: boat
   },
   {
     name: "Kids Clinic India ltd.",
@@ -56,6 +72,7 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo: KidsClinic
   },
   {
     name: "OLA Electric Mobility ltd.",
@@ -65,6 +82,7 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo: OlaElectric
   },
   {
     name: "One Mobikwik Systems ltd.",
@@ -74,6 +92,7 @@ const ipoList = [
     size: "1900 Cr.",
     type: "Book Built",
     listing: "Not Issued",
+    logo: MobiKwik
   },
   {
     name: "Le Travenues Technology",
@@ -83,6 +102,7 @@ const ipoList = [
     size: "1600 Cr.",
     type: "Book Built",
     listing: "Not Issued",
+    logo: ixigo
   },
   {
     name: "CMR Green Technologies",
@@ -92,6 +112,7 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo:cmr
   },
   {
     name: "Wellness Forever",
@@ -101,6 +122,7 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo: wellness
   },
   {
     name: "PKH Ventures Ltd.",
@@ -110,13 +132,14 @@ const ipoList = [
     size: "Not Issued",
     type: "Book Built",
     listing: "Not Issued",
+    logo: pkhVentures
   },
 ];
 
 const HomePage = () => {
   return (
     <>
-      <PublicNavbar /> {/* ✅You forgot to include this line */}
+      <PublicNavbar /> {/* You forgot to include this line */}
       <div className="min-h-screen bg-[#f5f5f5] py-10 px-4">
         <h2 className="text-2xl font-semibold mb-6 text-center text-[#333]">
           Upcoming IPO

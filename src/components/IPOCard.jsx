@@ -8,12 +8,25 @@ const IPOCard = ({
   size,
   type,
   listing,
+  logo
 }) => {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 border w-full max-w-sm mx-auto">
-      <div className="flex items-center mb-3">
-        {/* Placeholder circle for logo */}
-        <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+     <div className="flex items-center mb-3">
+        {/* Show logo if available */}
+        {logo ? (
+         <div className="w-12 h-12 bg-white border rounded-sm mr-3 flex items-center justify-center">
+  <img
+    src={logo}
+    alt={`${name} logo`}
+    className="w-10 h-10 object-contain"
+  />
+</div>
+
+
+        ) : (
+          <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+        )}
         <h2 className="text-lg font-semibold text-indigo-600">{name}</h2>
       </div>
 
