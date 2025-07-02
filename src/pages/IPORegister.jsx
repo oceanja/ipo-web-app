@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const RegisterIPO = () => {
   // Form state
@@ -89,20 +89,46 @@ const RegisterIPO = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSuccessMessage("");
-    
-    if (validateForm()) {
-      // Here you would typically send the data to your backend
-      console.log("Form submitted successfully:", formData);
-      setSuccessMessage("IPO registered successfully!");
-      
-      
-    } else {
-      console.log("Form has errors");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setSuccessMessage("");
+
+  if (validateForm()) {
+    try {
+      const payload = {
+        company_name: formData.companyName,
+        company_logo: "https://via.placeholder.com/100", // you can improve later
+        price_band: formData.priceBand,
+        open_date: formData.openDate || null,
+        close_date: formData.closeDate || null,
+        issue_size: formData.issueSize,
+        issue_type: formData.issueType,
+        listing_date: formData.listingDate || null,
+        status: formData.status === "Coming" ? "Upcoming" : formData.status, // map frontend status to backend
+        ipo_price: formData.ipoPrice || null,
+        listing_price: formData.listingPrice || null,
+        listing_gain: formData.listingGain || null,
+        current_market_price: formData.cmp || null,
+        current_return: formData.currentReturn || null,
+        drhp_pdf: formData.drhp || null,
+      };
+
+      const res = await axios.post("http://localhost:5050/api/ipo", payload);
+
+      if (res.status === 201) {
+        setSuccessMessage("IPO registered successfully!");
+        handleCancel();
+      } else {
+        alert("Unexpected error occurred");
+      }
+    } catch (error) {
+      console.error("Error creating IPO:", error);
+      alert("Failed to create IPO. Check the console for more info.");
     }
-  };
+  } else {
+    console.log("Form has validation errors");
+  }
+};
   
   // Handle cancel button
   const handleCancel = () => {

@@ -29,34 +29,30 @@ const IPOCard = ({
         )}
         <h2 className="text-lg font-semibold text-indigo-600">{name}</h2>
       </div>
-
-      <div className="grid grid-cols-2 gap-y-2 text-sm text-gray-700 mb-4">
-        <p className="font-medium">Price Band</p>
-        <p>{priceBand}</p>
-
-        <p className="font-medium">Open</p>
-        <p>{open}</p>
-
-        <p className="font-medium">Close</p>
-        <p>{close}</p>
-
-        <p className="font-medium">Issue Size</p>
-        <p>{size}</p>
-
-        <p className="font-medium">Issue Type</p>
-        <p>{type}</p>
-
-        <p className="font-medium">Listing Date</p>
-        <p>{listing}</p>
+      <div className="text-sm text-gray-700 space-y-1">
+        <div className="flex justify-between"><span>Price Band</span><span>{price_band}</span></div>
+        <div className="flex justify-between"><span>Open</span><span>{open_date}</span></div>
+        <div className="flex justify-between"><span>Close</span><span>{close_date}</span></div>
+        <div className="flex justify-between"><span>Issue Size</span><span>{issue_size}</span></div>
+        <div className="flex justify-between"><span>Issue Type</span><span>{issue_type}</span></div>
+        <div className="flex justify-between"><span>Listing Date</span><span>{listing_date}</span></div>
       </div>
 
-      <div className="flex gap-3 mt-2">
-        <button className="px-4 py-1 border border-blue-600 text-blue-600 rounded font-medium text-sm">
+      <div className="mt-3 flex gap-2">
+        <a
+          href={rhp_pdf || "#"}
+          className="border border-blue-500 text-blue-500 px-3 py-1 text-xs rounded hover:bg-blue-50"
+          target="_blank" rel="noreferrer"
+        >
           RHP
-        </button>
-        <button className="px-4 py-1 bg-red-500 text-white rounded font-medium text-sm">
+        </a>
+        <a
+          href={drhp_pdf || "#"}
+          className="bg-red-500 text-white px-3 py-1 text-xs rounded hover:bg-red-600"
+          target="_blank" rel="noreferrer"
+        >
           DRHP
-        </button>
+        </a>
       </div>
     </div>
   );
