@@ -51,6 +51,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
-    "postcss": "^8.3.6"
+    "crypto-browserify": "^3.12.1",
+    "https-browserify": "^1.0.0",
+    "postcss": "^8.3.6",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0"
   }
 }

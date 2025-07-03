@@ -1,168 +1,188 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import IPOCard from "../components/IPOCard";
-import PublicNavbar from "../components/PublicNavbar"; //  you're importing it
+import PublicNavbar from "../components/PublicNavbar";
 import NovaImage from "../assets/NOVAImage.png";
 import EPACKlogo from "../assets/EPACKImage.jpeg";
 import RKSwamy from "../assets/RKImage.jpeg";
 import oyo from "../assets/OYOlogo.png";  
 import boat from "../assets/BoatImage.png"; 
-import  KidsClinic from "../assets/ClinicIndia.png";
-import  OlaElectric from "../assets/OLAlogo.png";
-import  MobiKwik from "../assets/MobiKwik.png";
+import KidsClinic from "../assets/ClinicIndia.png";
+import OlaElectric from "../assets/OLAlogo.png";
+import MobiKwik from "../assets/MobiKwik.png";
 import ixigo from "../assets/ixigo.jpg";
 import cmr from "../assets/CMRlogo.jpg";
 import wellness from "../assets/welnessLogo.png";
 import pkhVentures from "../assets/PKHVneturesLogo.png";
-const ipoList = [
+
+// Sample IPO data to demonstrate the layout
+const sampleIPOs = [
   {
-    name: "Nova Agritech Ltd.",
-    priceBand: "Rs 39 - 41",
-    open: "2024-01-22",
-    close: "2024-01-24",
-    size: "143.81 Cr.",
-    type: "Book Built",
-    listing: "2024-01-30",
-    logo: NovaImage
+    company_name: "Nova Agritech Ltd.",
+    company_logo: NovaImage,
+    price_band: "Rs 39 - 41",
+    open_date: "2024-01-22",
+    close_date: "2024-01-24",
+    issue_size: "143.81",
+    issue_type: "Book Built",
+    listing_date: "2024-01-30",
+    status: "New Listed"
   },
   {
-    name: "EPACK Durable Ltd.",
-    priceBand: "Rs 218 - 230",
-    open: "2024-01-19",
-    close: "2024-01-23",
-    size: "640.05 Cr.",
-    type: "Book Built",
-    listing: "2024-01-29",
-    logo: EPACKlogo
+    company_name: "EPACK Durable Ltd.",
+    company_logo: EPACKlogo,
+    price_band: "Rs 218 - 230",
+    open_date: "2024-01-19",
+    close_date: "2024-01-23",
+    issue_size: "640.05",
+    issue_type: "Book Built",
+    listing_date: "2024-01-29",
+    status: "New Listed"
   },
   {
-    name: "RK Swamy Ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: RKSwamy,
+    company_name: "RK Swamy Ltd.",
+    company_logo: RKSwamy,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "Oravel Stays Ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "8430 Cr.",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: oyo
+    company_name: "Oravel Stays Ltd.",
+    company_logo: oyo,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "8430",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "Imagine marketing ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "2000 Cr.",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: boat
+    company_name: "Imagine Marketing Ltd.",
+    company_logo: boat,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "2000",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "Kids Clinic India ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: KidsClinic
+    company_name: "Kids Clinic India Ltd.",
+    company_logo: KidsClinic,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "OLA Electric Mobility ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: OlaElectric
+    company_name: "OLA Electric Mobility Ltd.",
+    company_logo: OlaElectric,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "One Mobikwik Systems ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "1900 Cr.",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: MobiKwik
+    company_name: "One Mobikwik Systems Ltd.",
+    company_logo: MobiKwik,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "1900",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "Le Travenues Technology",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "1600 Cr.",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: ixigo
+    company_name: "Le Travenues Technology",
+    company_logo: ixigo,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "1600",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "CMR Green Technologies",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo:cmr
+    company_name: "CMR Green Technologies",
+    company_logo: cmr,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "Wellness Forever",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: wellness
+    company_name: "Wellness Forever",
+    company_logo: wellness,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
   },
   {
-    name: "PKH Ventures Ltd.",
-    priceBand: "Not Issued",
-    open: "Not Issued",
-    close: "Not Issued",
-    size: "Not Issued",
-    type: "Book Built",
-    listing: "Not Issued",
-    logo: pkhVentures
-  },
+    company_name: "PKH Ventures Ltd.",
+    company_logo: pkhVentures,
+    price_band: "Not Issued",
+    open_date: "Not Issued",
+    close_date: "Not Issued",
+    issue_size: "Not Issued",
+    issue_type: "Book Built",
+    listing_date: "Not Issued",
+    status: "Coming"
+  }
 ];
 
 const HomePage = () => {
-  const [ipoList, setIpoList] = useState([]);
+  const [ipoList, setIpoList] = useState(sampleIPOs);
 
   useEffect(() => {
+    // Try to fetch from API, but fallback to sample data
     axios.get("http://localhost:5050/api/ipo")
-      .then((res) => setIpoList(res.data))
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setIpoList(res.data);
+        }
+      })
       .catch((err) => {
-        console.error("Failed to fetch IPOs:", err);
+        console.error("Failed to fetch IPOs, using sample data:", err);
+        // Keep sample data if API fails
       });
   }, []);
 
   return (
     <>
-      <PublicNavbar /> {/* You forgot to include this line */}
-      <div className="min-h-screen bg-[#f5f5f5] py-10 px-4">
-        <h2 className="text-2xl font-semibold mb-6 text-center text-[#333]">
-          Upcoming IPO
-        </h2>
+      <PublicNavbar />
+      <div className="min-h-screen bg-gray-50 py-8 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Upcoming IPO</h1>
+          <p className="text-gray-600 mb-8">
+            Invest and trade in IPO. Apply online for IPO. You might be allotted by the companies. Best of luck!
+          </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {ipoList.length > 0 ? (
-            ipoList.map((ipo, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ipoList.map((ipo, index) => (
               <IPOCard key={index} {...ipo} />
-            ))
-          ) : (
-            <p className="text-center col-span-full text-gray-500">No IPOs available</p>
-          )}
+            ))}
+          </div>
         </div>
       </div>
     </>
