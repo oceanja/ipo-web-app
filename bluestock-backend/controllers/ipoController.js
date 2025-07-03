@@ -26,12 +26,12 @@ const getIPOById = async (req, res) => {
   }
 };
 
-// Add new IPO
+// ✅ Add new IPO
 const addIPO = async (req, res) => {
   try {
     const {
       company_name,
-      company_logo,
+      company_logo, // optional
       price_band,
       open_date,
       close_date,
@@ -44,12 +44,16 @@ const addIPO = async (req, res) => {
       listing_gain,
       current_market_price,
       current_return,
-      drhp_pdf,
+      drhp_pdf
     } = req.body;
 
-    // Check if company exists
+    if (!company_name) {
+      return res.status(400).json({ error: "Company name is required" });
+    }
+
+    // 🏢 Check if company exists
     let companies = await companyModel.getAllCompanies();
-    let company = companies.find(c => c.company_name === company_name);
+    let company = companies.find(c => c.company_name.toLowerCase() === company_name.toLowerCase());
 
     if (!company) {
       company = await companyModel.addCompany({
@@ -58,6 +62,7 @@ const addIPO = async (req, res) => {
       });
     }
 
+    // Add IPO
     const ipo = await ipoModel.addIPO({
       company_id: company.company_id,
       price_band,
@@ -75,6 +80,7 @@ const addIPO = async (req, res) => {
       drhp_pdf
     });
 
+    // Optional: Add document
     if (drhp_pdf) {
       await documentModel.addDocument({
         ipo_id: ipo.ipo_id,
@@ -90,7 +96,7 @@ const addIPO = async (req, res) => {
   }
 };
 
-// ✅ Update IPO including company name/logo
+// ✅ Update IPO
 const updateIPO = async (req, res) => {
   const { id } = req.params;
   try {
@@ -109,22 +115,19 @@ const updateIPO = async (req, res) => {
       listing_gain,
       current_market_price,
       current_return,
-      drhp_pdf,
+      drhp_pdf
     } = req.body;
 
-    // Get IPO to find current company_id
     const existingIPO = await ipoModel.getIPOById(id);
     if (!existingIPO) return res.status(404).json({ error: "IPO not found" });
 
     const company_id = existingIPO.company_id;
 
-    // ✅ Update company info
     await companyModel.updateCompany(company_id, {
       company_name,
-      company_logo: company_logo || "https://via.placeholder.com/100"
+      company_logo: company_logo || existingIPO.company_logo || "https://via.placeholder.com/100"
     });
 
-    // ✅ Update IPO info
     const updated = await ipoModel.updateIPO(id, {
       price_band,
       open_date,
@@ -142,7 +145,6 @@ const updateIPO = async (req, res) => {
     });
 
     res.json({ message: "IPO updated successfully", ipo: updated });
-
   } catch (err) {
     console.error("Error updating IPO:", err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -167,5 +169,5 @@ module.exports = {
   getIPOById,
   addIPO,
   updateIPO,
-  deleteIPO,
+  deleteIPO
 };
