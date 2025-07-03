@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/AdminDashboard.css";
-import nseLogo from "../assets/NSE_IMAGELOGO.png";
-import bseLogo from "../assets/BSE_IMAGElogo.png";
-import sebiLogo from "../assets/sebiImage.png";
-import moneyControlLogo from "../assets/MoneyLogo.png";
+import nseLogo from "../assets/images/NSE_IMAGELOGO.png";
+import bseLogo from "../assets/images/BSE_IMAGElogo.png";
+import sebiLogo from "../assets/images/sebiImage.png";
+import moneyControlLogo from "../assets/images/MoneyLogo.png";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const donutData = [

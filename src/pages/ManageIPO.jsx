@@ -2,142 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FaTrashAlt, FaEye } from "react-icons/fa";
-import NovaImage from "../assets/NOVAImage.png";
-import EPACKlogo from "../assets/EPACKImage.jpeg";
-import RKSwamy from "../assets/RKImage.jpeg";
-import oyo from "../assets/OYOlogo.png";  
-import boat from "../assets/BoatImage.png"; 
-import KidsClinic from "../assets/ClinicIndia.png";
-import OlaElectric from "../assets/OLAlogo.png";
-import MobiKwik from "../assets/MobiKwik.png";
-import ixigo from "../assets/ixigo.jpg";
-import cmr from "../assets/CMRlogo.jpg";
-import wellness from "../assets/welnessLogo.png";
-import pkhVentures from "../assets/PKHVneturesLogo.png";
-
-// Sample IPO data to demonstrate the layout
-const sampleIPOs = [
-  {
-    ipo_id: 1,
-    company_name: "Adani Power",
-    company_logo: NovaImage,
-    price_band: "₹ 329 - 136",
-    open_date: "2023-06-03",
-    close_date: "2024-06-05",
-    issue_size: "4553.015",
-    issue_type: "Book Built",
-    listing_date: "2023-06-10",
-    status: "Ongoing"
-  },
-  {
-    ipo_id: 2,
-    company_name: "VBL LTD",
-    company_logo: EPACKlogo,
-    price_band: "₹ 229 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "1330.15",
-    issue_type: "Book Built",
-    listing_date: "2018-06-10",
-    status: "Coming"
-  },
-  {
-    ipo_id: 3,
-    company_name: "Tata Motor",
-    company_logo: RKSwamy,
-    price_band: "₹ 12549 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "1340.15",
-    issue_type: "Book Built",
-    listing_date: "2016-06-10",
-    status: "New Listed"
-  },
-  {
-    ipo_id: 4,
-    company_name: "HDFC LTD",
-    company_logo: oyo,
-    price_band: "₹ 1244 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "830.15",
-    issue_type: "Book Built",
-    listing_date: "2029-06-11",
-    status: "Coming"
-  },
-  {
-    ipo_id: 5,
-    company_name: "Tata Motor",
-    company_logo: boat,
-    price_band: "₹ 629 - 136",
-    open_date: "2024-06-01",
-    close_date: "2024-06-05",
-    issue_size: "820.15",
-    issue_type: "Book Built",
-    listing_date: "2023-06-10",
-    status: "Ongoing"
-  },
-  {
-    ipo_id: 6,
-    company_name: "VBL LTD",
-    company_logo: KidsClinic,
-    price_band: "₹ 629 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "130.15",
-    issue_type: "Book Built",
-    listing_date: "2024-06-10",
-    status: "Coming"
-  },
-  {
-    ipo_id: 7,
-    company_name: "Tata Motor",
-    company_logo: OlaElectric,
-    price_band: "₹ 6729 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "170.15",
-    issue_type: "Book Built",
-    listing_date: "2027-06-10",
-    status: "New Listed"
-  },
-  {
-    ipo_id: 8,
-    company_name: "VBL LTD",
-    company_logo: MobiKwik,
-    price_band: "₹ 1629 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "130.15",
-    issue_type: "Book Built",
-    listing_date: "2022-06-10",
-    status: "Coming"
-  },
-  {
-    ipo_id: 9,
-    company_name: "Tata Motor",
-    company_logo: ixigo,
-    price_band: "₹ 2329 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "130.15",
-    issue_type: "Book Built",
-    listing_date: "2023-06-10",
-    status: "New Listed"
-  },
-  {
-    ipo_id: 10,
-    company_name: "VBL LTD",
-    company_logo: cmr,
-    price_band: "₹ 329 - 136",
-    open_date: "2024-06-03",
-    close_date: "2024-06-05",
-    issue_size: "130.15",
-    issue_type: "Book Built",
-    listing_date: "2021-06-10",
-    status: "Coming"
-  }
-];
 
 const getStatusBadge = (status) => {
   const baseStyle = {
@@ -190,8 +54,8 @@ const buttonStyle = {
 
 const ManageIPO = () => {
   const navigate = useNavigate();
-  const location = useLocation(); //  to track route change
-  const [ipoData, setIpoData] = useState(sampleIPOs);
+  const location = useLocation();
+  const [ipoData, setIpoData] = useState([]);
 
   useEffect(() => {
     const fetchIPOs = async () => {
@@ -201,13 +65,12 @@ const ManageIPO = () => {
           setIpoData(res.data);
         }
       } catch (error) {
-        console.error("Error fetching IPOs, using sample data:", error);
-        // Keep sample data if API fails
+        console.error("Error fetching IPOs:", error);
       }
     };
 
     fetchIPOs();
-  }, [location.key]); // 👈 refresh on every route change
+  }, [location.key]);
 
   const handleDelete = async (id) => {
     try {
@@ -258,6 +121,7 @@ const ManageIPO = () => {
           <thead style={{ backgroundColor: "#f9f9fb", fontSize: "14px" }}>
             <tr>
               {[
+                "Logo",
                 "Company",
                 "Price Band",
                 "Open",
@@ -291,6 +155,13 @@ const ManageIPO = () => {
                   borderBottom: "1px solid #e0e0e0",
                 }}
               >
+                <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                  <img
+                    src={ipo.company_logo}
+                    alt={ipo.company_name}
+                    style={{ width: "60px", height: "auto", objectFit: "contain" }}
+                  />
+                </td>
                 <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.company_name}</td>
                 <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{ipo.price_band}</td>
                 <td style={{ border: "1px solid #e0e0e0", padding: "10px" }}>{formatDate(ipo.open_date)}</td>
@@ -319,7 +190,7 @@ const ManageIPO = () => {
             ))}
             {ipoData.length === 0 && (
               <tr>
-                <td colSpan="10" style={{ padding: "20px", color: "#999" }}>
+                <td colSpan="11" style={{ padding: "20px", color: "#999" }}>
                   No IPOs found.
                 </td>
               </tr>
