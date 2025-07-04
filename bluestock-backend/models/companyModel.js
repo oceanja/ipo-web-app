@@ -6,7 +6,7 @@ const getAllCompanies = async () => {
   return result.rows;
 };
 
-// Get company by ID (optional but useful)
+
 const getCompanyById = async (id) => {
   const result = await pool.query("SELECT * FROM companies WHERE company_id = $1", [id]);
   return result.rows[0];

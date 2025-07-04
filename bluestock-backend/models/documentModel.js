@@ -1,6 +1,6 @@
 const pool = require("../config/db");
 
-// Get all documents (optional, can be used for listing or admin dashboard)
+
 const getAllDocuments = async () => {
   const result = await pool.query("SELECT * FROM documents");
   return result.rows;

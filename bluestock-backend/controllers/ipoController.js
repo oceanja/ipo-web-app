@@ -164,10 +164,38 @@ const deleteIPO = async (req, res) => {
   }
 };
 
+// ✅ Get IPO count by status
+const getIPOStatusCounts = async (req, res) => {
+  try {
+    const ipos = await ipoModel.getAllIPOs();
+
+    const counts = {
+      Upcoming: 0,
+      "New Listed": 0,
+      Ongoing: 0,
+      Total: ipos.length
+    };
+
+    ipos.forEach(ipo => {
+      if (counts[ipo.status] !== undefined) {
+        counts[ipo.status]++;
+      }
+    });
+
+    res.json(counts);
+  } catch (error) {
+    console.error("Error fetching IPO status counts:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
 module.exports = {
   getAllIPOs,
   getIPOById,
   addIPO,
   updateIPO,
-  deleteIPO
+  deleteIPO,
+  getIPOStatusCounts
 };
