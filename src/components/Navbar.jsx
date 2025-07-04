@@ -15,20 +15,11 @@ const Navbar = () => {
         />
       </div>
 
-      {/* Right side */}
-      <div className="navbar-right">
-        <div className="navbar-user">
-          <div className="navbar-avatar">V</div>
-          <span className="navbar-username">Hi, Vishal</span>
-          <FontAwesomeIcon icon={faChevronDown} className="dropdown-icon" />
-        </div>
-
         <div className="navbar-bell">
           <FontAwesomeIcon icon={faBell} />
           <span className="notification-dot"></span>
         </div>
       </div>
-    </div>
   );
 };
 

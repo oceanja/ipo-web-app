@@ -33,7 +33,7 @@ const UpdateIPO = () => {
     try {
       await axios.put(`http://localhost:5050/api/ipo/${id}`, form);
       alert("IPO updated!");
-      navigate("/manage-ipo"); // or wherever your admin table is
+      navigate("/manage-ipo"); 
     } catch (err) {
       console.error("Update failed:", err);
     }

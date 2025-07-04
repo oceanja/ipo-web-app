@@ -94,9 +94,15 @@ const IPOCard = ({
         <button className="border border-blue-500 text-blue-500 px-4 py-2 text-sm font-medium rounded-md hover:bg-blue-50 transition-colors">
           RHP
         </button>
-          <button className="px-4 py-1 bg-red-500 text-white rounded font-medium text-sm">
-    DRHP
-  </button>
+          <a
+  href={drhp_pdf}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-4 py-1 bg-red-500 text-white rounded font-medium text-sm text-center inline-block"
+>
+  DRHP
+</a>
+
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaTh } from "react-icons/fa";
-import pubLogo from "../assets/pubLogo.png"; // Replace with your path
+import pubLogo from "../assets/pubLogo.png"; 
 
 const PublicNavbar = () => {
   return (
     <nav className="flex justify-between items-center px-6 py-3 bg-white shadow-sm">
-      {/* Left Section: Logo + Menu */}
+      
       <div className="flex items-center gap-8">
         <img src={pubLogo} alt="Bluestock" className="h-6 w-auto" />
 
@@ -19,7 +19,7 @@ const PublicNavbar = () => {
         </div>
       </div>
 
-      {/* Right Section: Auth + Menu Icon */}
+      
       <div className="flex items-center gap-4">
         <Link to="/login" className="text-sm text-gray-600 hover:text-black">
           Sign In
