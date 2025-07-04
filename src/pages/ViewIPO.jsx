@@ -8,7 +8,7 @@ const ViewIPO = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5050/api/ipo/${id}`)
+      .get(`http://ipo-web-app-1.onrender.com/api/ipo/${id}`)
       .then((res) => setIpo(res.data))
       .catch((err) => console.error("Error fetching IPO:", err));
   }, [id]);

@@ -60,7 +60,7 @@ const ManageIPO = () => {
   useEffect(() => {
     const fetchIPOs = async () => {
       try {
-        const res = await axios.get("http://localhost:5050/api/ipo");
+        const res = await axios.get("http://ipo-web-app-1.onrender.com/api/ipo");
         if (res.data && res.data.length > 0) {
           setIpoData(res.data);
         }
@@ -74,7 +74,7 @@ const ManageIPO = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5050/api/ipo/${id}`);
+      await axios.delete(`http://ipo-web-app-1.onrender.com/api/ipo/${id}`);
       setIpoData((prev) => prev.filter((ipo) => ipo.ipo_id !== id));
     } catch (error) {
       console.error("Error deleting IPO:", error);

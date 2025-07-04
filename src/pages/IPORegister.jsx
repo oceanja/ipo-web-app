@@ -90,7 +90,7 @@ const RegisterIPO = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:5050/api/ipo", data);
+      const res = await axios.post("https://ipo-web-app-1.onrender.com/api/ipo", data);
       if (res.status === 201) {
         setSuccessMessage("IPO Registered successfully!");
         handleCancel();

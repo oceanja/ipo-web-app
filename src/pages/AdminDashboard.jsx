@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchIPOStats = async () => {
       try {
-        const res = await axios.get("http://localhost:5050/api/ipo/status-counts");
+       const res = await axios.get("https://ipo-web-app-1.onrender.com/api/ipo/status-counts");
         const data = res.data;
 
         const formattedData = [

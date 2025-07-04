@@ -7,7 +7,7 @@ const HomePage = () => {
   const [ipoList, setIpoList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5050/api/ipo")
+   axios.get("https://ipo-web-app-1.onrender.com/api/ipo")
       .then((res) => {
         if (res.data && res.data.length > 0) {
           setIpoList(res.data);
