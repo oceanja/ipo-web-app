@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
 const app = express();
-const port = 5050; 
+const port = 5050;
 
-// Middleware
+// ✅ CORS Configuration
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://ipo-web-app-one.vercel.app/"], 
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
