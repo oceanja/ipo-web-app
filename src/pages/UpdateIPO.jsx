@@ -19,7 +19,7 @@ const UpdateIPO = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://ipo-web-app-1.onrender.com/api/ipo/${id}`)
+    axios.get(`https://ipo-web-app-1.onrender.com/api/ipo/${id}`)
       .then((res) => setForm(res.data))
       .catch((err) => console.error("Error loading IPO:", err));
   }, [id]);
@@ -31,7 +31,7 @@ const UpdateIPO = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://ipo-web-app-1.onrender.com/api/ipo/${id}`, form);
+      await axios.put(`https://ipo-web-app-1.onrender.com/api/ipo/${id}`, form);
       alert("IPO updated!");
       navigate("/manage-ipo"); 
     } catch (err) {
