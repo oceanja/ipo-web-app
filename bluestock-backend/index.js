@@ -2,10 +2,16 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
 const app = express();
-const port = 5050; // You can change this if needed
+const port = 5050; 
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
