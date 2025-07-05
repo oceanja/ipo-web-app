@@ -57,20 +57,22 @@ const ManageIPO = () => {
   const location = useLocation();
   const [ipoData, setIpoData] = useState([]);
 
-  useEffect(() => {
-    const fetchIPOs = async () => {
-      try {
-        const res = await axios.get("http://ipo-web-app-1.onrender.com/api/ipo");
-        if (res.data && res.data.length > 0) {
-          setIpoData(res.data);
-        }
-      } catch (error) {
-        console.error("Error fetching IPOs:", error);
+ useEffect(() => {
+  const fetchIPOs = async () => {
+    try {
+      const res = await axios.get("http://ipo-web-app-1.onrender.com/api/ipo");
+      console.log("IPO Data Fetched:", res.data);  // ✅ Debug log added
+      if (res.data && res.data.length > 0) {
+        setIpoData(res.data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching IPOs:", error);
+    }
+  };
 
-    fetchIPOs();
-  }, [location.key]);
+  fetchIPOs();
+}, [location.key]);
+
 
   const handleDelete = async (id) => {
     try {
