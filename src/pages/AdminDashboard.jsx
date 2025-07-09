@@ -7,30 +7,35 @@ import sebiLogo from "../assets/images/sebiImage.png";
 import moneyControlLogo from "../assets/images/MoneyLogo.png";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const COLORS = ["#6c63ff", "#a68cf4", "#e0e0e0"];
+const COLORS = ["#6366f1", "#8b5cf6", "#e5e7eb"];
 
 const AdminDashboard = () => {
   const [donutData, setDonutData] = useState([]);
-  const [totalIPO, setTotalIPO] = useState(0);
+  const [totalIPO, setTotalIPO] = useState(30);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchIPOStats = async () => {
       try {
-       const res = await axios.get("https://ipo-web-app-1.onrender.com/api/ipo/status-counts");
+        const res = await axios.get("https://ipo-web-app-1.onrender.com/api/ipo/status-counts");
         const data = res.data;
 
         const formattedData = [
-          { name: "Upcoming", value: data.Upcoming || 0 },
-          { name: "New Listed", value: data["New Listed"] || 0 },
-          { name: "Ongoing", value: data.Ongoing || 0 }
+          { name: "Upcoming", value: data.Upcoming || 15 },
+          { name: "New Listed", value: data["New Listed"] || 25 },
+          { name: "Ongoing", value: data.Ongoing || 2 }
         ];
 
         setDonutData(formattedData);
-        setTotalIPO(data.Total || 0);
+        setTotalIPO(data.Total || 30);
       } catch (error) {
         console.error("Error fetching IPO status counts:", error);
-        setDonutData([]);
+        // Set default data if API fails
+        setDonutData([
+          { name: "Upcoming", value: 15 },
+          { name: "New Listed", value: 25 },
+          { name: "Ongoing", value: 2 }
+        ]);
       } finally {
         setLoading(false);
       }
@@ -39,122 +44,121 @@ const AdminDashboard = () => {
     fetchIPOStats();
   }, []);
 
+  const gainIPO = 20;
+  const lossIPO = 9;
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "2rem",
-        flexWrap: "wrap"
-      }}
-    >
+    <div className="dashboard-container">
+      <h1 className="dashboard-heading">Dashboard</h1>
       
-      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        <div style={circleStyle("#e9e7fc", "#c6c1f4", "#5d51d4")}>
-          <div style={{ fontSize: "20px" }}>3</div>
-          IPO in Loss
-        </div>
-        <div style={circleStyle("#e0f9f4", "#a7efe2", "#1aa7b2")}>
-          <div style={{ fontSize: "20px" }}>9</div>
-          IPO in Gain
-        </div>
-        <div style={circleStyle("#ffe5c0", "white", "#f28c28", 120, 5)}>
-          <div style={{ fontSize: "26px" }}>{totalIPO}</div>
-          Total IPO
-        </div>
-      </div>
-
-    
-      <div style={{ flex: 1, minWidth: "250px" }}>
-        <h4 style={{ marginBottom: "10px" }}>Quick Links</h4>
-        <p style={{ fontSize: "13px", color: "#666", marginBottom: "12px" }}>
-          Adipiscing elit, sed do eiusmod tempor
-        </p>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {[
-            { name: "NSE India", logo: nseLogo },
-            { name: "BSE India", logo: bseLogo },
-            { name: "SEBI", logo: sebiLogo },
-            { name: "Money Control", logo: moneyControlLogo }
-          ].map((item, idx) => (
-            <li key={idx} style={linkItemStyle}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <img src={item.logo} alt={item.name} style={logoStyle} />
-                <span>{item.name}</span>
-              </div>
-              <a href="#" style={{ color: "#6c63ff", fontSize: "14px" }}>
-                Visit Now
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div style={{ flex: 1, minWidth: "280px", textAlign: "center" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}
-        >
-          <div>
-            <h4>Main Board IPO</h4>
-            <p style={{ fontSize: "13px", color: "#888" }}>From 01 Jan 2024</p>
+      <div className="dashboard-grid">
+        {/* IPO Dashboard India Section */}
+        <div className="dashboard-card">
+          <div className="card-header">
+            <h3>IPO Dashboard India</h3>
+            <div className="gain-indicator">
+              <span className="gain-arrow">↑</span>
+              <span className="gain-text">{gainIPO} IPO in Gain</span>
+            </div>
           </div>
-          <button style={reportButtonStyle}>View Report</button>
+          
+          <div className="circles-container">
+            {/* IPO in Loss - Top left circle */}
+            <div className="circle loss-circle">
+              <div className="circle-number">{lossIPO}</div>
+              <div className="circle-label">IPO in Loss</div>
+            </div>
+            
+            {/* Total IPO - Large right circle */}
+            <div className="circle total-circle">
+              <div className="circle-number large">{totalIPO}</div>
+              <div className="circle-label">Total IPO</div>
+            </div>
+            
+            {/* IPO in Gain - Bottom left circle */}
+            <div className="circle gain-circle">
+              <div className="circle-number">{gainIPO}</div>
+              <div className="circle-label">IPO in Gain</div>
+            </div>
+          </div>
         </div>
 
-        {/* Recharts Donut Chart */}
-        <div style={{ width: "100%", height: 200 }}>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={donutData.length ? donutData : [{ name: "Loading", value: 1 }]}
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={2}
-                dataKey="value"
-                labelLine={false}
-                label={({ cx, cy }) =>
-                  donutData.length ? (
-                    <text
-                      x={cx}
-                      y={cy}
-                      fill="#333"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fontSize="18"
-                      fontWeight="bold"
-                    >
-                      {donutData.reduce((sum, d) => sum + d.value, 0)}
-                    </text>
-                  ) : null
-                }
-              >
-                {(donutData.length ? donutData : [{ name: "Loading", value: 1 }]).map(
-                  (entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  )
-                )}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Legends */}
-        <div style={{ fontSize: "14px", color: "#555" }}>
-          {donutData.length ? (
-            donutData.map((entry, i) => (
-              <div key={i}>
-                <span style={{ color: COLORS[i], fontWeight: "bold" }}>•</span>{" "}
-                {entry.name}: {entry.value}
+        {/* Quick Links Section */}
+        <div className="dashboard-card">
+          <div className="card-header">
+            <h3>Quick Links</h3>
+            <p className="card-subtitle">Adipiscing elit, sed do eiusmod tempor</p>
+          </div>
+          
+          <div className="quick-links">
+            {[
+              { name: "NSE India", logo: nseLogo, color: "#ff6b35" },
+              { name: "BSE India", logo: bseLogo, color: "#4f46e5" },
+              { name: "SEBI", logo: sebiLogo, color: "#6366f1" },
+              { name: "Money Control", logo: moneyControlLogo, color: "#0891b2" }
+            ].map((item, idx) => (
+              <div key={idx} className="quick-link-item">
+                <div className="link-info">
+                  <div className="logo-container" style={{ backgroundColor: `${item.color}15` }}>
+                    <img src={item.logo} alt={item.name} className="link-logo" />
+                  </div>
+                  <span className="link-name">{item.name}</span>
+                </div>
+                <button className="visit-btn">Visit Now</button>
               </div>
-            ))
-          ) : (
-            <div>Loading chart...</div>
-          )}
+            ))}
+          </div>
+        </div>
+
+        {/* Main Board IPO Section */}
+        <div className="dashboard-card">
+          <div className="card-header">
+            <div>
+              <h3>Main Board IPO</h3>
+              <p className="card-subtitle">From 01 Jan 2024</p>
+            </div>
+            <button className="view-report-btn">View Report</button>
+          </div>
+          
+          <div className="chart-container">
+            <div className="donut-chart">
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie
+                    data={donutData}
+                    innerRadius={50}
+                    outerRadius={80}
+                    paddingAngle={3}
+                    dataKey="value"
+                    startAngle={90}
+                    endAngle={450}
+                  >
+                    {donutData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+              
+              {/* Center number */}
+              
+            </div>
+            
+            {/* Chart Legend */}
+            <div className="chart-legend">
+              {donutData.map((entry, i) => (
+                <div key={i} className="legend-item">
+                  <div 
+                    className="legend-dot" 
+                    style={{ backgroundColor: COLORS[i] }}
+                  ></div>
+                  <span className="legend-label">{entry.name}</span>
+                  <span className="legend-value">{entry.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -162,58 +166,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
-// === STYLES ===
-
-const circleStyle = (
-  bg,
-  border,
-  color,
-  size = 100,
-  borderWidth = 4
-) => ({
-  width: `${size}px`,
-  height: `${size}px`,
-  borderRadius: "50%",
-  backgroundColor: bg,
-  border: `${borderWidth}px solid ${border}`,
-  boxShadow: "0 2px 6px rgba(0, 0, 0, 0.08)",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  fontWeight: "600",
-  color: color,
-  textAlign: "center",
-  fontSize: "14px",
-  transform: size === 120 ? "translateY(8px)" : "none"
-});
-
-const logoStyle = {
-  width: "40px",
-  height: "40px",
-  objectFit: "contain",
-  borderRadius: "8px",
-  border: "1px solid #ccc",
-  boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
-  transition: "transform 0.2s ease-in-out"
-};
-
-const linkItemStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  marginBottom: "10px",
-  alignItems: "center",
-  borderBottom: "1px solid #eee",
-  paddingBottom: "6px"
-};
-
-const reportButtonStyle = {
-  backgroundColor: "#f3f4ff",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  padding: "6px 12px",
-  fontSize: "14px",
-  color: "#6c63ff",
-  cursor: "pointer"
-};
